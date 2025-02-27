@@ -5,6 +5,10 @@ using TheShelf.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+builder.Services.Configure<OMBDSettings>(builder.Configuration.GetSection("OMBD"));
+
 // Add services to the container.
 
 builder
@@ -62,8 +66,22 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // allows our api endpoints to access the database through Entity Framework Core
 builder.Services.AddNpgsql<TheShelfDbContext>(builder.Configuration["TheShelfDbConnectionString"]);
+builder.Services.Configure<OMBDSettings>(builder.Configuration.GetSection("OMBD"));
+
+var ombdUrl = builder.Configuration["OMBD:Url"];
+var ombdApiKey = builder.Configuration["OMBD:ApiKey"];
+
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
+});
 
 var app = builder.Build();
+
+// Log values before running the app
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("OMBD URL: {Url}", ombdUrl);
+logger.LogInformation("OMBD ApiKey: {ApiKey}", ombdApiKey);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
