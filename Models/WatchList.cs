@@ -10,4 +10,5 @@ public class WatchList
     public string Title { get; set; }
     public int UserId { get; set; }
     public bool IsPrivate { get; set; }
+    public List<WatchListMedia> WatchListMedia { get; set; } = new List<WatchListMedia>();
 }
