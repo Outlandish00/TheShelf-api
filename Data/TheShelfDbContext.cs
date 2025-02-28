@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TheShelf.Models;
 
 namespace TheShelf.Data;
@@ -81,6 +82,13 @@ public class TheShelfDbContext : IdentityDbContext<IdentityUser>
                     UserId = 1,
                     Title = "Stream",
                     Genre = "Horror",
+                    Actors = "A lot of them",
+                    PosterLink =
+                        "https://m.media-amazon.com/images/M/MV5BMjk3MmFmNGItOGI1NS00NzNiLWFiMmItOWMyZjE1MmE4N2M2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                    Rating = "7/10",
+                    Rated = "R",
+                    ReleaseYear = "2021",
+                    Director = "John McHohnatan",
                 }
             );
         modelBuilder
@@ -101,8 +109,23 @@ public class TheShelfDbContext : IdentityDbContext<IdentityUser>
                 {
                     Id = 1,
                     WatchListId = 1,
-                    MediaId = 1,
+                    MovieId = 1,
                 }
             );
+
+        //These handle cascading deletions
+        modelBuilder
+            .Entity<WatchList>()
+            .HasMany(w => w.WatchListMedia)
+            .WithOne(wm => wm.Watchlist)
+            .HasForeignKey(wm => wm.WatchListId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder
+            .Entity<Movie>()
+            .HasMany(m => m.WatchListMedia)
+            .WithOne(wm => wm.Movie)
+            .HasForeignKey(wm => wm.MovieId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

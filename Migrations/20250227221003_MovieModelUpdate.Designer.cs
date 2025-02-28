@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TheShelf.Data;
@@ -11,9 +12,11 @@ using TheShelf.Data;
 namespace TheShelf_api.Migrations
 {
     [DbContext(typeof(TheShelfDbContext))]
-    partial class TheShelfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250227221003_MovieModelUpdate")]
+    partial class MovieModelUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,13 +152,13 @@ namespace TheShelf_api.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07515986-2a6b-4d52-afea-d3995793f747",
+                            ConcurrencyStamp = "cadd4953-ddea-4a6c-aa00-be001d286c6b",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEE+rUACNqILbRxQFXTwtJIQ1pTmOt1PHojWu+gAYHnPqav7F3m5f1+UHB7O1B1MIhg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOW0U88PFIIvMlVddTGzs7UA++OMOUJvl6w9WWrhQxu/u5dAu/qbI06dkD9J28LGrQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2481840f-7978-4cf1-878c-4e339d67a7c4",
+                            SecurityStamp = "13c329c3-e14d-46b0-b1e2-3d15cb40d8be",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -510,7 +513,7 @@ namespace TheShelf_api.Migrations
             modelBuilder.Entity("TheShelf.Models.WatchListMedia", b =>
                 {
                     b.HasOne("TheShelf.Models.Movie", "Movie")
-                        .WithMany("WatchListMedia")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -524,11 +527,6 @@ namespace TheShelf_api.Migrations
                     b.Navigation("Movie");
 
                     b.Navigation("Watchlist");
-                });
-
-            modelBuilder.Entity("TheShelf.Models.Movie", b =>
-                {
-                    b.Navigation("WatchListMedia");
                 });
 
             modelBuilder.Entity("TheShelf.Models.WatchList", b =>

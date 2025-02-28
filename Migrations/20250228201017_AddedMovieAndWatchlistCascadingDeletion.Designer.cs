@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TheShelf.Data;
@@ -11,9 +12,11 @@ using TheShelf.Data;
 namespace TheShelf_api.Migrations
 {
     [DbContext(typeof(TheShelfDbContext))]
-    partial class TheShelfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250228201017_AddedMovieAndWatchlistCascadingDeletion")]
+    partial class AddedMovieAndWatchlistCascadingDeletion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

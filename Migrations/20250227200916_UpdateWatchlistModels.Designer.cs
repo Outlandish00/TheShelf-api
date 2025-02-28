@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TheShelf.Data;
@@ -11,9 +12,11 @@ using TheShelf.Data;
 namespace TheShelf_api.Migrations
 {
     [DbContext(typeof(TheShelfDbContext))]
-    partial class TheShelfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250227200916_UpdateWatchlistModels")]
+    partial class UpdateWatchlistModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,13 +152,13 @@ namespace TheShelf_api.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07515986-2a6b-4d52-afea-d3995793f747",
+                            ConcurrencyStamp = "83f767da-21cf-4ebd-b726-dc262b6fe755",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEE+rUACNqILbRxQFXTwtJIQ1pTmOt1PHojWu+gAYHnPqav7F3m5f1+UHB7O1B1MIhg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEC6BAdU1g+Jjx11hMtpF4S9gmreuSLqNWEuMLkjNKCdTK3qkp0M2l2Hko1qg0hmhng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2481840f-7978-4cf1-878c-4e339d67a7c4",
+                            SecurityStamp = "e4c38533-7866-47c6-9eaf-b8f1cc01174e",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -299,31 +302,7 @@ namespace TheShelf_api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Actors")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Director")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PosterLink")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Rated")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Rating")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ReleaseYear")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -342,13 +321,7 @@ namespace TheShelf_api.Migrations
                         new
                         {
                             Id = 1,
-                            Actors = "A lot of them",
-                            Director = "John McHohnatan",
                             Genre = "Horror",
-                            PosterLink = "https://m.media-amazon.com/images/M/MV5BMjk3MmFmNGItOGI1NS00NzNiLWFiMmItOWMyZjE1MmE4N2M2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-                            Rated = "R",
-                            Rating = "7/10",
-                            ReleaseYear = "2021",
                             Title = "Stream",
                             UserId = 1
                         });
@@ -510,7 +483,7 @@ namespace TheShelf_api.Migrations
             modelBuilder.Entity("TheShelf.Models.WatchListMedia", b =>
                 {
                     b.HasOne("TheShelf.Models.Movie", "Movie")
-                        .WithMany("WatchListMedia")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -524,11 +497,6 @@ namespace TheShelf_api.Migrations
                     b.Navigation("Movie");
 
                     b.Navigation("Watchlist");
-                });
-
-            modelBuilder.Entity("TheShelf.Models.Movie", b =>
-                {
-                    b.Navigation("WatchListMedia");
                 });
 
             modelBuilder.Entity("TheShelf.Models.WatchList", b =>

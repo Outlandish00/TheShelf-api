@@ -70,8 +70,16 @@ public class MovieController : ControllerBase
     [HttpPost]
     public IActionResult PostMovieToLocalDatabase(Movie newMovie)
     {
-        _dbContext.Movies.Add(newMovie);
-        _dbContext.SaveChanges();
-        return NoContent();
+        try
+        {
+            _dbContext.Movies.Add(newMovie);
+            _dbContext.SaveChanges();
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return BadRequest();
+        }
     }
 }
