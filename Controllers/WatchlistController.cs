@@ -16,6 +16,22 @@ public class WatchlistController : ControllerBase
     }
 
     [HttpGet]
+    public IActionResult GetAllWatchlists()
+    {
+        var foundWatchlists = _dbContext
+            .Watchlists.Where(wl => wl.IsPrivate == false)
+            .Select(wl => new WatchListDTO
+            {
+                Id = wl.Id,
+                Title = wl.Title,
+                UserId = wl.UserId,
+                IsPrivate = wl.IsPrivate,
+            })
+            .ToList();
+        return Ok(foundWatchlists);
+    }
+
+    [HttpGet("userId={userId}")]
     public IActionResult GetUsersWatchlist(int userId, int? movieId)
     {
         if (movieId != null)
