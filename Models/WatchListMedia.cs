@@ -6,6 +6,6 @@ public class WatchListMedia
     public int WatchListId { get; set; }
     public int MovieId { get; set; }
 
-    public WatchList Watchlist { get; set; }
-    public Movie Movie { get; set; }
+    public WatchList? Watchlist { get; set; }
+    public Movie? Movie { get; set; }
 }
