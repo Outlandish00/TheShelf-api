@@ -16,8 +16,25 @@ public class WatchlistController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetUsersWatchlist(int? userId)
+    public IActionResult GetUsersWatchlist(int userId, int? movieId)
     {
+        if (movieId != null)
+        {
+            var UserWatchlistContainingMovie = _dbContext
+                .Watchlists.Include(wl => wl.WatchListMedia)
+                .Where(wl =>
+                    wl.UserId == userId && wl.WatchListMedia.Any(wlm => wlm.MovieId == movieId)
+                )
+                .Select(wl => new WatchListDTO
+                {
+                    Id = wl.Id,
+                    Title = wl.Title,
+                    UserId = wl.UserId,
+                    IsPrivate = wl.IsPrivate,
+                })
+                .ToList();
+            return Ok(UserWatchlistContainingMovie);
+        }
         var UserWatchlist = _dbContext
             .Watchlists.Where(w => w.UserId == userId)
             .Include(w => w.WatchListMedia)
