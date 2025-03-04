@@ -24,16 +24,12 @@ public class MovieController : ControllerBase
     public IActionResult GetMovies()
     {
         List<MovieDTO> foundMovies = _dbContext
-            .Movies.Select(m => new MovieDTO
-            {
-                Id = m.Id,
-                UserId = m.UserId,
-                Title = m.Title,
-                Genre = m.Genre,
-            })
+            .Movies.Select(m => new MovieDTO { Id = m.Id, imbdId = m.imbdId })
             .ToList();
         return Ok(foundMovies);
     }
+
+    //Get movie from OMDB by the title
 
     [HttpGet("search/{title}")]
     public async Task<IActionResult> GetMovieByTitleFromOMBD(string title)
@@ -67,6 +63,44 @@ public class MovieController : ControllerBase
         }
     }
 
+    //Get a movie from its IMDB Id from OMBD
+
+    [HttpGet("search/id={imbdId}")]
+    public async Task<IActionResult> GetMovieByImbdIdFromOMBD(string imbdId)
+    {
+        Console.WriteLine($"Received ImbdId: {imbdId}");
+
+        if (string.IsNullOrWhiteSpace(imbdId))
+        {
+            return BadRequest("ImdbId required.");
+        }
+        var ApiKey = _ombdSettings.ApiKey;
+        var Url = _ombdSettings.Url;
+        Console.WriteLine($"OMDB URL: {Url}");
+        Console.WriteLine($"OMDB ApiKey: {ApiKey}");
+        var apiUrl = $"{Url}/?apikey={ApiKey}&i={imbdId}";
+
+        try
+        {
+            using var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(apiUrl);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("Error getting response from OMBD");
+            }
+            var movieData = await response.Content.ReadAsStringAsync();
+            var parsedMovieData = JsonSerializer.Deserialize<object>(movieData);
+            return Ok(parsedMovieData);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+
     [HttpPost]
     public IActionResult PostMovieToLocalDatabase(Movie newMovie)
     {
@@ -81,5 +115,19 @@ public class MovieController : ControllerBase
             Console.WriteLine(ex.Message);
             return BadRequest();
         }
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult getMovieById(int id)
+    {
+        MovieDTO foundMovie = _dbContext
+            .Movies.Select(m => new MovieDTO { Id = m.Id, imbdId = m.imbdId })
+            .FirstOrDefault();
+
+        if (foundMovie == null)
+        {
+            return BadRequest();
+        }
+        return Ok(foundMovie);
     }
 }
