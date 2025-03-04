@@ -76,20 +76,8 @@ public class TheShelfDbContext : IdentityDbContext<IdentityUser>
         modelBuilder
             .Entity<Movie>()
             .HasData(
-                new Movie
-                {
-                    Id = 1,
-                    UserId = 1,
-                    Title = "Stream",
-                    Genre = "Horror",
-                    Actors = "A lot of them",
-                    PosterLink =
-                        "https://m.media-amazon.com/images/M/MV5BMjk3MmFmNGItOGI1NS00NzNiLWFiMmItOWMyZjE1MmE4N2M2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-                    Rating = "7/10",
-                    Rated = "R",
-                    ReleaseYear = "2021",
-                    Director = "John McHohnatan",
-                }
+                new Movie { Id = 1, imbdId = "tt0322802" },
+                new Movie { Id = 2, imbdId = "tt0499549" }
             );
         modelBuilder
             .Entity<WatchList>()

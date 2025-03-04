@@ -67,13 +67,7 @@ public class WatchlistController : ControllerBase
                         Id = wm.Id,
                         WatchListId = wm.WatchListId,
                         MovieId = wm.MovieId,
-                        Movie = new MovieDTO
-                        {
-                            Id = wm.Movie.Id,
-                            UserId = wm.Movie.UserId,
-                            Title = wm.Movie.Title,
-                            Genre = wm.Movie.Genre,
-                        },
+                        Movie = new MovieDTO { Id = wm.Movie.Id, imbdId = wm.Movie.imbdId },
                     })
                     .ToList(),
             })
@@ -101,19 +95,7 @@ public class WatchlistController : ControllerBase
                         Id = wlm.Id,
                         WatchListId = wlm.WatchListId,
                         MovieId = wlm.MovieId,
-                        Movie = new MovieDTO
-                        {
-                            Id = wlm.Movie.Id,
-                            UserId = wlm.Movie.UserId,
-                            Title = wlm.Movie.Title,
-                            Genre = wlm.Movie.Genre,
-                            Actors = wlm.Movie.Actors,
-                            PosterLink = wlm.Movie.PosterLink,
-                            Rating = wlm.Movie.Rating,
-                            Rated = wlm.Movie.Rated,
-                            ReleaseYear = wlm.Movie.ReleaseYear,
-                            Director = wlm.Movie.Director,
-                        },
+                        Movie = new MovieDTO { Id = wlm.Movie.Id, imbdId = wlm.Movie.imbdId },
                     })
                     .ToList(),
             })
