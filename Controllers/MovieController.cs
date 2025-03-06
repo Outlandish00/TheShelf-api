@@ -121,7 +121,8 @@ public class MovieController : ControllerBase
     public IActionResult getMovieById(int id)
     {
         MovieDTO foundMovie = _dbContext
-            .Movies.Select(m => new MovieDTO { Id = m.Id, imbdId = m.imbdId })
+            .Movies.Where(m => m.Id == id)
+            .Select(m => new MovieDTO { Id = m.Id, imbdId = m.imbdId })
             .FirstOrDefault();
 
         if (foundMovie == null)
