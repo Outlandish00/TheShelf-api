@@ -31,8 +31,8 @@ public class MovieController : ControllerBase
 
     //Get movie from OMDB by the title
 
-    [HttpGet("search/{title}")]
-    public async Task<IActionResult> GetMovieByTitleFromOMBD(string title)
+    [HttpGet("search/{title}/{page}")]
+    public async Task<IActionResult> GetMovieByTitleFromOMBD(string title, int page = 1)
     {
         if (string.IsNullOrWhiteSpace(title))
         {
@@ -42,7 +42,7 @@ public class MovieController : ControllerBase
         var Url = _ombdSettings.Url;
         Console.WriteLine($"OMDB URL: {Url}");
         Console.WriteLine($"OMDB ApiKey: {ApiKey}");
-        var apiUrl = $"{Url}/?apikey={ApiKey}&t={title}&type=movie";
+        var apiUrl = $"{Url}/?apikey={ApiKey}&s={title}&type=movie&page={page}";
 
         try
         {
