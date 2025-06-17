@@ -1,8 +1,9 @@
 namespace TheShelf.Models;
 
-public class MediaLike
+public class MovieRating
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public int MediaId { get; set; }
+    public int MovieId { get; set; }
+    public int Rating { get; set; }
 }
