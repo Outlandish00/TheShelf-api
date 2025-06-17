@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TheShelf.Data;
@@ -11,9 +12,11 @@ using TheShelf.Data;
 namespace TheShelf_api.Migrations
 {
     [DbContext(typeof(TheShelfDbContext))]
-    partial class TheShelfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250617214517_RenamedMovieLikes")]
+    partial class RenamedMovieLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,13 +152,13 @@ namespace TheShelf_api.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f2a7f660-1807-46c0-9bcc-b79c30bb7257",
+                            ConcurrencyStamp = "ceba2a7a-70db-4e32-946f-267984fa034d",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAECKQ6pXv6hHhffMyqUIzNdy1lfOeNtgOPXTNmVdRHHBL/dm6BqzXOozoNn0KVIeU6A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHgg93ynQ7FCG1bfd/+sFOuB0oaKQb9aH85cNHVMmO9hwNuyih1T7ZXZUqdGBwHxnw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "43a7d0f0-6344-4117-8aad-14efb4851e35",
+                            SecurityStamp = "ee9e951e-8494-40df-9daa-8081f5260b0c",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -301,7 +304,7 @@ namespace TheShelf_api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TheShelf.Models.MovieRating", b =>
+            modelBuilder.Entity("TheShelf.Models.MovieLike", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -312,15 +315,12 @@ namespace TheShelf_api.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("MovieRatings");
+                    b.ToTable("MovieLikes");
                 });
 
             modelBuilder.Entity("TheShelf.Models.UserProfile", b =>

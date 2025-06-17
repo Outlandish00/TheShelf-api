@@ -13,7 +13,7 @@ public class TheShelfDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Movie> Movies { get; set; }
     public DbSet<WatchList> Watchlists { get; set; }
     public DbSet<WatchListMedia> WatchListMedias { get; set; }
-    public DbSet<MediaLike> MediaLikes { get; set; }
+    public DbSet<MovieRating> MovieRatings { get; set; }
     public DbSet<MediaComment> MediaComments { get; set; }
 
     public TheShelfDbContext(DbContextOptions<TheShelfDbContext> context, IConfiguration config)

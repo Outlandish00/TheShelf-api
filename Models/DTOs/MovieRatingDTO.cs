@@ -1,8 +1,9 @@
 namespace TheShelf.Models.DTOs;
 
-public class MediaLikeDTO
+public class MovieRatingDTO
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public int MediaId { get; set; }
+    public int MovieId { get; set; }
+    public int Rating { get; set; }
 }
